@@ -8,7 +8,6 @@ public class TriggerButtonReactor : ButtonReactor
 
     protected bool completed = false;
     protected int currentSignals;
-    protected List<Collider> callers = new List<Collider>();
 
     protected void Update()
     {
@@ -26,14 +25,12 @@ public class TriggerButtonReactor : ButtonReactor
     {
         if (e.type == LogicGatesBus.LogicGates.triggerButton && e.id == id)
         {
-            if (callers.Contains(e.caller))
+            if (e.actionType == LogicGatesBus.ActionType.exit)
             {
-                callers.Remove(e.caller);
                 currentSignals--;
             }
-            else
+            else if(e.actionType == LogicGatesBus.ActionType.enter)
             {
-                callers.Add(e.caller);
                 currentSignals++;
             }
         }

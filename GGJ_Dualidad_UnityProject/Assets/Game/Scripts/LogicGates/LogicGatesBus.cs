@@ -10,10 +10,17 @@ public class LogicGatesBus : MonoBehaviour
         triggerButton
     }
 
+    public enum ActionType
+    {
+        enter,
+        exit
+    }
+
     public struct LogicGateEvent
     {
         public LogicGates type;
         public Collider caller;
+        public ActionType actionType;
         public int id;
     }
 

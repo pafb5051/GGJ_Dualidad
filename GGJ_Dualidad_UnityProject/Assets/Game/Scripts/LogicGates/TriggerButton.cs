@@ -8,7 +8,7 @@ public class TriggerButton : Button
     {
         if ((1 << other.gameObject.layer & allowedPlayers) != 0)
         {
-            bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.triggerButton, caller=other, id = id });
+            bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.triggerButton, caller=other, actionType = LogicGatesBus.ActionType.enter, id = id });
         }
     }
 
@@ -16,7 +16,7 @@ public class TriggerButton : Button
     {
         if ((1 << other.gameObject.layer & allowedPlayers) != 0)
         {
-            bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.triggerButton, caller = other, id = id });
+            bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.triggerButton, caller = other, actionType = LogicGatesBus.ActionType.exit, id = id });
         }
     }
 }

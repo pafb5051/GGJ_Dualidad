@@ -4,26 +4,59 @@ using UnityEngine;
 
 public class HoldButtonReactor : ButtonReactor
 {
-    public bool state;
+    public bool initialState;
+
+    protected bool currentState;
+
+    private bool _switch = false;
+
+    private Dictionary<Collider, bool> _individualButtonsStates = new Dictionary<Collider, bool>();
+
 
     protected void Update()
     {
-        /*if (state)
+        if (_switch)
         {
-            Debug.Log("state is true");
+            _switch = false;
+            currentState = false;
+            Dictionary<Collider, bool>.Enumerator enumerator = _individualButtonsStates.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                currentState |= enumerator.Current.Value;
+            }
+
+            Debug.Log("switch to " + currentState);
         }
-        else
-        {
-            Debug.Log("state is false");
-        }*/
     }
 
     protected override void LogicEventCalled(LogicGatesBus.LogicGateEvent e)
     {
         if(e.type == LogicGatesBus.LogicGates.holdButton && e.id == id)
         {
-            Debug.Log("logic pressed");
-            state = !state;
+            if(e.actionType == LogicGatesBus.ActionType.enter)
+            {
+                if (_individualButtonsStates.ContainsKey(e.caller))
+                {
+                    _individualButtonsStates[e.caller] = !initialState;
+                }
+                else
+                {
+                    _individualButtonsStates.Add(e.caller, !initialState);
+                }
+                _switch = true;
+            }
+            else if( e.actionType == LogicGatesBus.ActionType.exit)
+            {
+                if (_individualButtonsStates.ContainsKey(e.caller))
+                {
+                    _individualButtonsStates[e.caller] = initialState;
+                }
+                else
+                {
+                    _individualButtonsStates.Add(e.caller, initialState);
+                }
+                _switch = true;
+            }
         }
     }
 }

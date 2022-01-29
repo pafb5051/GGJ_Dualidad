@@ -12,16 +12,18 @@ public enum PlayerType
 public class Player : MonoBehaviour
 {
     public PlayerType type;
+    public float moveSpeed;
+    public Rigidbody body;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Vector3 moveVector;
 
-    // Update is called once per frame
-    void Update()
+    [HideInInspector] public bool active;
+
+
+    public void ProcessActions(Vector2 input)
     {
-        
+        moveVector.x = -input.x * moveSpeed * Time.fixedDeltaTime;
+        moveVector.z = -input.y * moveSpeed * Time.fixedDeltaTime;
+        body.MovePosition(transform.position + moveVector);
     }
 }

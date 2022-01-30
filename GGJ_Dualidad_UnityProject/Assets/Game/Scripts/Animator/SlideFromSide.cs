@@ -16,18 +16,18 @@ public class SlideFromSide : ScriptAnimation
     [ContextMenu("AnimateIn")]
     public override void AnimateForward()
     {
-        if (transform.position != end)
+        if (transform.localPosition != end)
         {
-            transform.DOMove(end, duration);
+            transform.DOLocalMove(end, duration);
         }
     }
 
     [ContextMenu("AnimateOut")]
     public override void AnimateBackward()
     {
-        if (transform.position != origin)
+        if (transform.localPosition != origin)
         {
-            transform.DOMove(origin, duration);
+            transform.DOLocalMove(origin, duration);
         }
     }
 }

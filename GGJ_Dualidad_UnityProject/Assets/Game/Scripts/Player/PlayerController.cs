@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
             players[_currentPlayer].active = false;
             _currentPlayer = (_currentPlayer + 1) % players.Length;
             players[_currentPlayer].active = true;
-            _cameraController.SetPlayer(players[_currentPlayer].collider);
+            _cameraController.SetPlayer(players[_currentPlayer].playerCollider);
             Debug.Log("current active player is " + players[_currentPlayer].type.ToString());
         }
     }

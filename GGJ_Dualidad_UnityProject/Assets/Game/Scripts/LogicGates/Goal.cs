@@ -52,6 +52,7 @@ public class Goal : ButtonReactor
 
                 if (endCamera)
                 {
+                    Camera.main.enabled = false;
                     endCamera.enabled = true;
                 }
 

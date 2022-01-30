@@ -17,6 +17,11 @@ public class TriggerButtonReactor : ButtonReactor
             {
                 Debug.Log("trigger completed");
                 completed = true;
+                GetComponent<Collider>().enabled = true;
+                if(animator != null)
+                {
+                    animator.AnimateForward();
+                }
             }
         }
     }

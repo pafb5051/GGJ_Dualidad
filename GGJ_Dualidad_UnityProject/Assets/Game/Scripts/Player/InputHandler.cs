@@ -29,6 +29,8 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    private bool _active;
+
     public System.Action<ActionTypes> swapCharacterAction;
     public System.Action<ActionTypes> skillAction;
 
@@ -54,8 +56,27 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    public void SetActive(bool active)
+    {
+        if (active)
+        {   
+            _active = true;
+        }
+        else
+        {
+            _moveVector = Vector2.zero;
+            _active = false;
+        }
+
+    }
+
     private void Update()
     {
+        if (!_active)
+        {
+            return;
+        }
+
         _moveVector.x = Input.GetAxis("Horizontal");
         _moveVector.y = Input.GetAxis("Vertical");
 

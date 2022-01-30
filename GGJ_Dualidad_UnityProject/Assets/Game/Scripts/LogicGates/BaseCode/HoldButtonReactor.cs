@@ -17,7 +17,6 @@ public class HoldButtonReactor : ButtonReactor
         base.Start();
     }
 
-
     protected virtual void Update()
     {
         if (_switch)
@@ -37,7 +36,6 @@ public class HoldButtonReactor : ButtonReactor
                 }
             }
 
-            Debug.Log("switch to " + currentState);
             ChangeState();
         }
     }

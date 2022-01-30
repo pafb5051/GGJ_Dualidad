@@ -38,8 +38,7 @@ public class CameraController : MonoBehaviour
 
     public FollowAlgorithm currentFollowAlgoritm = FollowAlgorithm.simple;
 
-    private float _offsetY;
-
+    public float _offsetY;
     public float _offsetX;
     public float _offsetZ;
     public Vector3 focusAreaSize;
@@ -60,12 +59,13 @@ public class CameraController : MonoBehaviour
     protected Camera _camera;
     //protected OrthographicSizeScaler _scaler;
 
-    private bool _started = false;
+    public bool _started = false;
 
     private void Awake()
     {
-        int x = 0;
         _instance = this;
+        _camera = GetComponent<Camera>();
+        _camera.enabled = false;
     }
 
     void OnDestroy()
@@ -75,11 +75,8 @@ public class CameraController : MonoBehaviour
 
     // Use this for initialization
     private void Start()
-    {
-        _camera = GetComponent<Camera>();
+    {        
         //_scaler = GetComponent<OrthographicSizeScaler>();
-
-        _offsetY = transform.position.y;
         transform.parent = null;
         _currentVelocity = Vector3.zero;
 
@@ -91,8 +88,21 @@ public class CameraController : MonoBehaviour
             {
                 focusArea = new FocusArea(target.bounds, focusAreaSize);
             }
-            _started = true;
         }
+    }
+
+    public void SetInitialPlayer(Collider t)
+    {
+        target = t;
+        Vector3 initialPos = target.transform.position + Vector3.forward * _offsetZ + Vector3.right * _offsetX;
+
+
+        float newX = Mathf.Clamp(initialPos.x, minXAndY.x, maxXAndY.x);
+        float newZ = Mathf.Clamp(initialPos.y, minXAndY.z, maxXAndY.z);
+
+        transform.position = new Vector3(newX, _offsetY, newZ);
+
+        _camera.enabled = true;
     }
 
     public void SetPlayer(Collider t)

@@ -19,6 +19,7 @@ public class mainMenu : MonoBehaviour
 
     public void Iniciar()
     {
+        SoundManager.Instance.PlaySound(SoundNames.ingameButton);
         SceneManager.LoadScene("SampleScene");
     }
 

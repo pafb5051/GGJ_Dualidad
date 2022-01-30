@@ -99,7 +99,10 @@ public class CameraController : MonoBehaviour
     {
         target = t;
         _lastTargetPosition = target.transform.position;
-        focusArea = new FocusArea(target.bounds, focusAreaSize);
+        if (currentFollowAlgoritm == FollowAlgorithm.boundBox)
+        {
+            focusArea = new FocusArea(target.bounds, focusAreaSize);
+        }
         _started = true;
     }
 
@@ -127,8 +130,6 @@ public class CameraController : MonoBehaviour
 
         finalTargetPosition += Vector3.forward * _offsetZ + Vector3.right * _offsetX;
 
-        Debug.Log("delta " + delta);
-
         if(Mathf.Abs(delta.x) > lookAheadMoveThreshold)
         {
             finalTargetPosition.x += Mathf.Sign(delta.x) * lookAheadFactor;
@@ -152,8 +153,7 @@ public class CameraController : MonoBehaviour
         float newX = Mathf.Clamp(tempX, minXAndY.x, maxXAndY.x);
         float newZ = Mathf.Clamp(tempZ, minXAndY.z, maxXAndY.z);
 
-        transform.position = new Vector3(newX, _offsetY, newZ);
-        
+        transform.position = new Vector3(newX, _offsetY, newZ);        
     }
 
     

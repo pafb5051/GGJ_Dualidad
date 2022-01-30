@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Player[] players;
 
     private InputHandler _inputHandler;
+    private CameraController _cameraController;
     private int _currentPlayer;
 
 
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _inputHandler = InputHandler.Instance;
-
+        _cameraController = CameraController.Instance;
         _inputHandler.swapCharacterAction += SwapCharacter;
     }
 
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
             players[_currentPlayer].active = false;
             _currentPlayer = (_currentPlayer + 1) % players.Length;
             players[_currentPlayer].active = true;
+            _cameraController.SetPlayer(players[_currentPlayer].collider);
             Debug.Log("current active player is " + players[_currentPlayer].type.ToString());
         }
     }

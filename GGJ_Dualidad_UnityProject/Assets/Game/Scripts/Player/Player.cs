@@ -14,11 +14,11 @@ public class Player : MonoBehaviour
     public PlayerType type;
     public float moveSpeed;
     public Rigidbody body;
+    public Collider collider;
 
     Vector3 moveVector;
 
     [HideInInspector] public bool active;
-
 
     public void ProcessActions(Vector2 input)
     {

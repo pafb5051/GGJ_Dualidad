@@ -12,21 +12,39 @@ public class HoldButtonReactor : ButtonReactor
 
     private Dictionary<Collider, bool> _individualButtonsStates = new Dictionary<Collider, bool>();
 
+    protected override void Start()
+    {
+        base.Start();
+    }
 
-    protected void Update()
+
+    protected virtual void Update()
     {
         if (_switch)
         {
             _switch = false;
-            currentState = false;
+            currentState = initialState;
             Dictionary<Collider, bool>.Enumerator enumerator = _individualButtonsStates.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                currentState |= enumerator.Current.Value;
+                if (!initialState)
+                {
+                    currentState |= enumerator.Current.Value;
+                }
+                else
+                {
+                    currentState &= enumerator.Current.Value;
+                }
             }
 
             Debug.Log("switch to " + currentState);
+            ChangeState();
         }
+    }
+
+    protected virtual void ChangeState()
+    {
+
     }
 
     protected override void LogicEventCalled(LogicGatesBus.LogicGateEvent e)

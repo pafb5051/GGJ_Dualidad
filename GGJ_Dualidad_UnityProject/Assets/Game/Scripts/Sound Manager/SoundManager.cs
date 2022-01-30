@@ -12,86 +12,88 @@ public class SoundEvent
 
     public AudioSource audioSource;
 
-    public AudioClip[] AudioClips;
+    public AudioClip[] audioClips;
 
     public AudioMixerGroup output;
 
     [Range(0f, 1f)]
-    public float MinVolume = 1f;
+    public float minVolume = 1f;
 
     [Range(0f, 1f)]
-    public float MaxVolume = 1f;
+    public float maxVolume = 1f;
 
     [Range(0f, 3f)]
-    public float MinPitch = 1f;
+    public float minPitch = 1f;
 
     [Range(0f, 3f)]
-    public float MaxPitch = 1f;
+    public float maxPitch = 1f;
 
     [Range(-1f, 1f)]
-    public float StereoPan = 0f;
+    public float stereoPan = 0f;
 
     [Range(0f, 5f)]
-    public float DelayTime = 0f;
+    public float delayTime = 0f;
 
     [Range(0f, 5f)]
-    public float RandomizeDelay = 0f;
+    public float randomizeDelay = 0f;
 
-    public bool AvoidRepeat = false;
+    public bool avoidRepeat = false;
 
-    public bool Delay = false;
+    public bool delay = false;
 
-    public bool RandomizeLoop = false;
+    public bool randomizeLoop = false;
 
-    public bool Mute = false;
+    public bool mute = false;
 
-    public bool PlayOnAwake = false;
+    public bool playOnAwake = false;
 
     [HideInInspector]
-    public bool PlayCalled = false;
+    public bool playCalled = false;
+
+    public bool loop;
 
 
     public void Play()
     {
-        PlayCalled = true;
+        playCalled = true;
 
-        float randomvolume = Random.Range(MinVolume, MaxVolume);
-        float randompitch = Random.Range(MinPitch, MaxPitch);
+        float randomvolume = Random.Range(minVolume, maxVolume);
+        float randompitch = Random.Range(minPitch, maxPitch);
 
         audioSource.volume = randomvolume;
         audioSource.pitch = randompitch;
-        audioSource.panStereo = StereoPan;
-        audioSource.loop = Loop;
-        audioSource.mute = Mute;
-        audioSource.outputAudioMixerGroup = Output;
+        audioSource.panStereo = stereoPan;
+        audioSource.loop = loop;
+        audioSource.mute = mute;
+        audioSource.outputAudioMixerGroup = output;
 
 
-        if(Delay == false && AvoidRepeat == false){
-        audioSource.clip = AudioClip[Random.Range(0, AudioClips.lenth)];
+        if(delay == false && avoidRepeat == false){
+        audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
         audioSource.Play();
         }
 
-        if (AvoidRepeat == true && Delay == false) {
-        int r = Random.Range(1, audioClips.Lenth);
-        audioSource.clip = AudioClips[r];
-        audioSource.Play();
-        AudioClips[r] = AudioClips[0];
-        AudioClips[0] = audioSource.clip;
+        if (avoidRepeat == true && delay == false) {
+            int r = Random.Range(1, audioClips.Length);
+            audioSource.clip = audioClips[r];
+            audioSource.Play();
+            audioClips[r] = audioClips[0];
+            audioClips[0] = audioSource.clip;
         }
 
-        if(Delay == true && AvoidRepeat == true){
-        float delay = Random.Range(DelayTime - RandomizeDelay, DelayTime + RandomizeDelay);
-        int r = Random.Range(1, audioClips.Lenth);
-        audioSource.clip = AudioClips[r];
-        audioSource.PlayDelayed(delay);
-        AudioClips[r] = AudioClips[0];
-        AudioClips[0] = audioSource.clip;
+        if(delay == true && avoidRepeat == true){
+            float delay = Random.Range(delayTime - randomizeDelay, delayTime + randomizeDelay);
+            int r = Random.Range(1, audioClips.Length);
+            audioSource.clip = audioClips[r];
+            audioSource.PlayDelayed(delay);
+            audioClips[r] = audioClips[0];
+            audioClips[0] = audioSource.clip;
         }
 
-        if(Delay == true && AvoidRepeat == false)
+        if(delay == true && avoidRepeat == false)
         {
-        float delay = Random.Range(DelayTime - RandomizeDelay, DelayTime + RandomizeDelay);
-        audioSource.clip = AudioClip[Random.Range(0, AudioClips.lenth)];
+        float delay = Random.Range(delayTime - randomizeDelay, delayTime + randomizeDelay);
+        audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
         audioSource.PlayDelayed(delay);
         }
 }
@@ -109,37 +111,44 @@ public class SoundEvent
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance = null;
+    private static SoundManager _instance = null;
+    public static SoundManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
 
     [SerializeField]
-    SoundEvent[] SoundEvents;
+    SoundEvent[] soundEvents;
 
     private void Awake()
     {
-        if (instance != null)
+        if (_instance != null)
         {
-            if (instance != this)
+            if (_instance != this)
             {
                 Destroy(gameObject);
             }
         }
         else
         {
-            instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
-        for (int i = 0; i < SoundEvents.Length; i++)
+        for (int i = 0; i < soundEvents.Length; i++)
         {
-            if (SoundEvents[i].audioSource == null)
+            if (soundEvents[i].audioSource == null)
             {
-                GameObject gameObject = new GameObject("SoundEvent_" + i + "_" + SoundEvents[i].Name);
+                GameObject gameObject = new GameObject("SoundEvent_" + i + "_" + soundEvents[i].name);
                 gameObject.transform.SetParent(this.transform);
-                SoundEvents[i].audioSource = gameObject.AddComponent<AudioSource>();
+                soundEvents[i].audioSource = gameObject.AddComponent<AudioSource>();
             }
-            if (SoundEvent[i].PlayOnAwake)
+            if (soundEvents[i].playOnAwake)
             {
-                SoundEvents[i].Play();
+                soundEvents[i].Play();
                 return;
             }
         }
@@ -158,11 +167,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(string _name)
     {
-        for (int i = 0; i < SoundEvents.Length; i++)
+        for (int i = 0; i < soundEvents.Length; i++)
         {
-            if (SoundEvents[i].Name == _name)
+            if (soundEvents[i].name == _name)
             {
-                SoundEvents[i].Play();
+                soundEvents[i].Play();
                 return;
             }
         }
@@ -172,11 +181,11 @@ public class SoundManager : MonoBehaviour
 
     public void StopSound(string _name)
     {
-        for (int i = 0; i < SoundEvents.Length; i++)
+        for (int i = 0; i < soundEvents.Length; i++)
         {
-            if (SoundEvents[i].Name == _name)
+            if (soundEvents[i].name == _name)
             {
-                SoundEvents[i].Stop();
+                soundEvents[i].Stop();
                 return;
             }
         }
@@ -187,23 +196,23 @@ public class SoundManager : MonoBehaviour
 
     IEnumerator RepeatPlaySound()
     {
-        for (int i = 0; i < SoundEvents.Length; i++)
+        for (int i = 0; i < soundEvents.Length; i++)
         {
-            if (SoundEvents[i].PlayCalled == true && SoundEvents[i].RandomizeLoop == true && SoundEvents[i].AvoidRepeat == true)
+            if (soundEvents[i].playCalled == true && soundEvents[i].randomizeLoop == true && soundEvents[i].avoidRepeat == true)
             {
-                if (SoundEvents[i].Delay == false)
+                if (soundEvents[i].delay == false)
                 {
-                    yield return new WaitForSeconds(SoundEvents[i].audioSource.clip.lenght);
+                    yield return new WaitForSeconds(soundEvents[i].audioSource.clip.length);
                 }
 
-                if (SoundEvent[i].Delay == true)
+                if (soundEvents[i].delay == true)
                 {
-                    float delay = Random.Range(SoundEvents[i].DelayTime - SoundEvents[i].RandomizeDelay, SoundEvents[i].DelayTime + SoundEvents[i].RandomizeDelay);
-                    yield return new WaitForSeconds(SoundEvents[i].AudioSource.clips.length + delay);
+                    float delay = Random.Range(soundEvents[i].delayTime - soundEvents[i].randomizeDelay, soundEvents[i].delayTime + soundEvents[i].randomizeDelay);
+                    yield return new WaitForSeconds(soundEvents[i].audioSource.clip.length + delay);
                 }
-                if (!SoundEvents[i].audioSource.isPlaying)
+                if (!soundEvents[i].audioSource.isPlaying)
                 {
-                PlaySound(SoundEvents[i].Name);
+                    PlaySound(soundEvents[i].name);
                 }
             }
         }

@@ -24,7 +24,7 @@ public class Goal : ButtonReactor
         {
             if (requiredSignals == currentSignals)
             {
-                Debug.Log("level ended completed");
+                //Debug.Log("level ended completed");
                 completed = true;
                 gameManager.EndGame();
             }

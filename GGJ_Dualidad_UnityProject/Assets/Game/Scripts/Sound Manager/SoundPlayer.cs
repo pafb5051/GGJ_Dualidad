@@ -6,17 +6,17 @@ public class SoundPlayer : MonoBehaviour
 {
     SoundManager soundManager;
 
-    public string[] _soundnames;
+    /*public string[] _soundnames;
 
     public string[] _Name
     {
         get { return _soundnames; }
         set { _soundnames = value; }
-    }
+    }*/
 
     private void Start()
     {
-        soundManager = soundManager.instance;
+        soundManager = SoundManager.Instance;
     }
 
     public void PlaySoundEvent(string _soundnames)
@@ -27,6 +27,5 @@ public class SoundPlayer : MonoBehaviour
     public void StopSoundEvent(string _soundnames)
     {
         soundManager.StopSound(_soundnames);
-    }
     }
 }

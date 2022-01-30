@@ -6,6 +6,7 @@ public class Button : MonoBehaviour
 {
     public int id;
     public Animation animator;
+    public SoundPlayer player;
 
     public LayerMask allowedPlayers;
 

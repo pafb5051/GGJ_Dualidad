@@ -4,11 +4,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Ramdom = UnityEngine.Random;
 
+public enum SoundNames
+{
+    ingameButton, // NO SE DEBEN AGREGAR ELEMENTOS INTERMEDIOS SIEMPRE SE DEBE HACER AL FINAL
+    angelIdle,
+    demonIdle,
+    //ADD elementes at the end;
+}
+
 
 [System.Serializable]
 public class SoundEvent
 {
-    public string name;
+    public SoundNames name;
 
     public AudioSource audioSource;
 
@@ -165,7 +173,7 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(RepeatPlaySound());
     }
 
-    public void PlaySound(string _name)
+    public void PlaySound(SoundNames _name)
     {
         for (int i = 0; i < soundEvents.Length; i++)
         {

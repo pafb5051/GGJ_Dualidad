@@ -6,7 +6,7 @@ public class HoldButton : Button
 {
     private void OnTriggerEnter(Collider other)
     {
-        player.PlaySoundEvent("IngameButton");
+        soundPlayer.PlaySound(SoundNames.ingameButton);
         if ((1 << other.gameObject.layer & allowedPlayers) != 0)
         {
             bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.holdButton, caller = other, actionType = LogicGatesBus.ActionType.enter, id = id });
@@ -15,7 +15,7 @@ public class HoldButton : Button
 
     private void OnTriggerExit(Collider other)
     {
-        player.PlaySoundEvent("IngameButton");
+        soundPlayer.PlaySound(SoundNames.ingameButton);
         if ((1 << other.gameObject.layer & allowedPlayers) != 0)
         {
             bus.OnLogicGateEvent.Invoke(new LogicGatesBus.LogicGateEvent() { type = LogicGatesBus.LogicGates.holdButton, caller = other, actionType = LogicGatesBus.ActionType.exit, id = id });

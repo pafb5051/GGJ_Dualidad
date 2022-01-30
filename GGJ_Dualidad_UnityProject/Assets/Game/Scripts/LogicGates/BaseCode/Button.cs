@@ -6,7 +6,7 @@ public class Button : MonoBehaviour
 {
     public int id;
     public Animation animator;
-    public SoundPlayer player;
+    protected SoundManager soundPlayer;
 
     public LayerMask allowedPlayers;
 
@@ -16,5 +16,6 @@ public class Button : MonoBehaviour
     protected virtual void Start()
     {
         bus = LogicGatesBus.Instance;
+        soundPlayer = SoundManager.Instance;
     }
 }

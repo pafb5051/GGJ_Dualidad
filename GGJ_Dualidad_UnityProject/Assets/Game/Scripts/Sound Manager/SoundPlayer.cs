@@ -19,12 +19,12 @@ public class SoundPlayer : MonoBehaviour
         soundManager = SoundManager.Instance;
     }
 
-    public void PlaySoundEvent(string _soundnames)
+    public void PlaySoundEvent(SoundNames _soundnames)
     {
         soundManager.PlaySound(_soundnames);
     }
 
-    public void StopSoundEvent(string _soundnames)
+    public void StopSoundEvent(SoundNames _soundnames)
     {
         soundManager.StopSound(_soundnames);
     }

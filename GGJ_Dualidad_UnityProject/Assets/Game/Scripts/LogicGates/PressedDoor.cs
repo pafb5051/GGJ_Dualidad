@@ -16,7 +16,10 @@ public class PressedDoor : HoldButtonReactor
     protected override void ChangeState()
     {
         base.ChangeState();
-        collider.enabled = currentState;
+        if (collider != null)
+        {
+            collider.enabled = currentState;
+        }
         if(animator != null)
         {
             if (initialState != currentState)

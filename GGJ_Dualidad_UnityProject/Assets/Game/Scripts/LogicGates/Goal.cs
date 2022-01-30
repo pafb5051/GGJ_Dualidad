@@ -20,9 +20,10 @@ public class Goal : ButtonReactor
 
     public float yRotateSpeed = 50;
     public float zRotateSpeed = 50;
-    public float xRotateSpeed = 50;
 
     public Pairs reward;
+
+    public Camera endCamera;
 
     protected bool completed = false;
     protected int currentSignals;
@@ -48,6 +49,11 @@ public class Goal : ButtonReactor
                 GameObject right = GameObject.Instantiate<GameObject>(reward.right,spawnPoint_2,false);
                 left.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                 right.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+                if (endCamera)
+                {
+                    endCamera.enabled = true;
+                }
 
                 SoundManager.Instance.PlaySound(SoundNames.win);
                 visualObject.GetComponent<MeshRenderer>().material.DOFade(0, 0.5f).OnComplete(()=> visualObject.GetComponent<MeshRenderer>().enabled = false);

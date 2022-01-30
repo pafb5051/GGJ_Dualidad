@@ -9,7 +9,10 @@ public class PressedDoor : HoldButtonReactor
     protected override void Start()
     {
         base.Start();
-        collider.enabled = initialState;
+        if (collider != null)
+        {
+            collider.enabled = initialState;
+        }
     }
 
     // Update is called once per frame

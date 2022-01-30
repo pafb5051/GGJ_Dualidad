@@ -6,7 +6,7 @@ public class ButtonReactor : MonoBehaviour
 {
     public int id;
 
-    public Animation animator;
+    public ScriptAnimation animator;
     protected LogicGatesBus bus;
 
     // Start is called before the first frame update

@@ -17,5 +17,16 @@ public class PressedDoor : HoldButtonReactor
     {
         base.ChangeState();
         collider.enabled = currentState;
+        if(animator != null)
+        {
+            if (initialState != currentState)
+            {
+                animator.AnimateForward();
+            }
+            else
+            {
+                animator.AnimateBackward();
+            }
+        }
     }
 }

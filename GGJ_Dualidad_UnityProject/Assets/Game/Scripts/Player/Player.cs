@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
 
     public void ProcessActions(Vector2 input)
     {
-        moveVector.x = -input.x * moveSpeed * Time.fixedDeltaTime;
-        moveVector.z = -input.y * moveSpeed * Time.fixedDeltaTime;
+        moveVector.x = input.x * moveSpeed * Time.deltaTime;
+        moveVector.z = input.y * moveSpeed * Time.deltaTime;
         body.MovePosition(transform.position + moveVector);
     }
 }

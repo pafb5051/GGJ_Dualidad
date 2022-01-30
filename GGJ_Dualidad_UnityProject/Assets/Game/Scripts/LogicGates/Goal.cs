@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct Pairs
@@ -60,6 +61,9 @@ public class Goal : ButtonReactor
                 visualObject.GetComponent<MeshRenderer>().material.DOFade(0, 0.5f).OnComplete(()=> visualObject.GetComponent<MeshRenderer>().enabled = false);
                 left.GetComponent<MeshRenderer>().material.DOFade(1, 2f);
                 right.GetComponent<MeshRenderer>().material.DOFade(1, 2f);
+
+                StartCoroutine(MoveToMainMenu());
+                
             }
         }
 
@@ -67,6 +71,12 @@ public class Goal : ButtonReactor
         {
             visualObject.transform.localRotation = Quaternion.Euler(visualObject.transform.localEulerAngles + (Vector3.up * yRotateSpeed * Time.deltaTime) + (Vector3.forward * zRotateSpeed * Time.deltaTime));
         }
+    }
+
+    IEnumerator MoveToMainMenu()
+    {
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene("MainMenu");
     }
 
     protected override void LogicEventCalled(LogicGatesBus.LogicGateEvent e)

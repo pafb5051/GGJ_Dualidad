@@ -9,6 +9,7 @@ public enum SoundNames
     ingameButton, // NO SE DEBEN AGREGAR ELEMENTOS INTERMEDIOS SIEMPRE SE DEBE HACER AL FINAL
     angelIdle,
     demonIdle,
+    win,
     //ADD elementes at the end;
 }
 

@@ -187,7 +187,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void StopSound(string _name)
+    public void StopSound(SoundNames _name)
     {
         for (int i = 0; i < soundEvents.Length; i++)
         {

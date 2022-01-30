@@ -41,7 +41,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3908018221199133171, guid: 9a482c41fed814a47bca8e9817648743, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ffadd5b82250cf14e8f9c13b47361a88, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f5b45ac0097692040a8b9ce693b6e348, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -49,7 +49,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 104
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

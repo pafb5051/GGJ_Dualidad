@@ -7,6 +7,7 @@ public class BackMainMenu : MonoBehaviour
 {
     public void Volver()
     {
+        SoundManager.Instance.PlaySound(SoundNames.ingameButton);
         SceneManager.LoadScene("MainMenu");
     }
     

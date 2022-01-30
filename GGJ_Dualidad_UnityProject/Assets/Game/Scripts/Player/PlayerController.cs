@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
         _inputHandler = InputHandler.Instance;
         _cameraController = CameraController.Instance;
         _inputHandler.swapCharacterAction += SwapCharacter;
+        _cameraController.SetInitialPlayer(players[_currentPlayer].playerCollider);
     }
 
     private void OnDestroy()

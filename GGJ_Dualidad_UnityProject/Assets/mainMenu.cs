@@ -5,21 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public GameObject home;
+    public GameObject levelSelect;
+    
 
     public void Iniciar()
     {
-        SceneManager.LoadScene("SampleScene");
+        SoundManager.Instance.PlaySound(SoundNames.ingameButton);
+        //SceneManager.LoadScene("SampleScene");
+        home.SetActive(false);
+        levelSelect.SetActive(true);
     }
 
 
